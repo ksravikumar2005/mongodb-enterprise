@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 services:
   mongodb:
-    build: ./mongodb_enterprise_centos_4.0.4
-#    image: ksravikumar2005/mongo:enterprise_centos_mongodb_4.0.4
+#    build: ./mongodb_enterprise_centos_4.0.4
+    image: ksravikumar2005/mongo:enterprise_centos_mongodb_4.0.4
     ports:
       - 27017:27017
     networks:
