@@ -1,0 +1,17 @@
+version: '2'
+services:
+  mongodb:
+    build: ./mongodb_enterprise_centos_4.0.4
+#    image: ksravikumar2005/mongo:enterprise_centos_mongodb_4.0.4
+    ports:
+      - 27017:27017
+    networks:
+      - mongodb
+    volumes:
+      - data_db:/data/sb
+    command:  "mongod --bind_ip_all --logpath /data/db/mongod.log"
+networks:
+  mongodb:
+volumes:
+  data_db:
+        
