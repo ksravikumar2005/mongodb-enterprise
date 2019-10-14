@@ -1,6 +1,6 @@
 version: '3'
 services:
-  mongodb:
+  opsmanager:
 #    build: ./mongodb_enterprise_centos_4.0.4
     image: ksravikumar2005/mongo:enterprise_centos_mongodb_4.0.4
     ports:
@@ -8,10 +8,55 @@ services:
     networks:
       - mongodb
     volumes:
-      - data_db:/data/db
+      - opsmanager_etc:/etc
     command:  "mongod --bind_ip_all --logpath /data/db/mongod.log"
 networks:
   mongodb:
 volumes:
-  data_db:
-        
+  opsmanager_data_db:
+  opsmanager_etc:
+  
+  opsmanager-db:
+     image: mongo:latest
+     hostname: opsmanager-db
+     ports:
+       - 27017:27017
+     volumes:
+       - opsmanagerdatabase_datadb:/data/db
+       - ./certs:/certs
+     networks:
+       - opsmanager
+   opsmanager-backup:
+     image: mongo:latest
+     hostname: opsmanager-backup
+     ports:
+       - 37017:27017
+     volumes:
+       - backupdatabase_datadb:/data/db
+       - ./certs:/certs
+     networks:
+       - opsmanager
+   opsmanager-db:
+     image: mongo:latest
+     hostname: opsmanager-db
+     ports:
+       - 27017:27017
+     volumes:
+       - opsmanagerdatabase_datadb:/data/db
+       - ./certs:/certs
+     networks:
+       - opsmanager
+   opsmanager-backup:
+     image: mongo:latest
+     hostname: opsmanager-backup
+     ports:
+       - 37017:27017
+     volumes:
+       - backupdatabase_datadb:/data/db
+       - ./certs:/certs
+     networks:
+       - opsmanager
+volumes:
+  opsmanager_data_db:
+  opsmanager_etc:
+  backupdatabase_datadb:
